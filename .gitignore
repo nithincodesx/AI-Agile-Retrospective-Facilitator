@@ -1,0 +1,13 @@
+# Server logs
+.freebuff/*.log
+.freebuff/server-pid.txt
+
+# Node
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Generated test artifacts
+test_verify.js

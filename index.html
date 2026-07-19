@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetroVibe — AI Retrospective Coach</title>
+  <meta name="description" content="AI-powered Agile retrospective facilitator that analyzes emotional bottlenecks and suggests team-building exercises.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" aria-label="RetroVibe Home">
+        <svg class="nav__logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 14l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav__logo-text">RetroVibe</span>
+      </a>
+      <div class="nav__links">
+        <a href="#analyze" class="nav__link">Analyze</a>
+        <a href="#personality" class="nav__link">Team Profile</a>
+        <a href="#exercises" class="nav__link">Exercises</a>
+        <a href="#tracker" class="nav__link">Vibe Tracker</a>
+        <a href="#history" class="nav__link">History</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero__bg">
+        <div class="hero__gradient hero__gradient--1"></div>
+        <div class="hero__gradient hero__gradient--2"></div>
+      </div>
+      <div class="hero__inner">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          AI-Powered Team Coach
+        </div>
+        <h1 class="hero__title">
+          Your Team's<br>
+          <span class="hero__title-accent">Emotional Intelligence</span><br>
+          Retrospective
+        </h1>
+        <p class="hero__subtitle">
+          Go beyond task bottlenecks. RetroVibe analyzes meeting transcripts to detect emotional patterns,
+          suggests personality-tailored team exercises, and tracks whether your team's vibe actually improves.
+        </p>
+        <div class="hero__actions">
+          <a href="#analyze" class="btn btn--primary">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Start Analysis
+          </a>
+          <button class="btn btn--ghost" data-action="sample-transcript">
+            Try Sample Transcript
+          </button>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <span class="hero__stat-number" data-count="0">0</span>
+            <span class="hero__stat-label">Retrospectives</span>
+          </div>
+          <div class="hero__stat-divider"></div>
+          <div class="hero__stat">
+            <span class="hero__stat-number" data-count="0">0</span>
+            <span class="hero__stat-label">Emotions Analyzed</span>
+          </div>
+          <div class="hero__stat-divider"></div>
+          <div class="hero__stat">
+            <span class="hero__stat-number" data-count="0">0</span>
+            <span class="hero__stat-label">Exercises Suggested</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analyze Section -->
+    <section class="section" id="analyze">
+      <div class="section__inner">
+        <div class="section__header">
+          <h2 class="section__title">Analyze a Retrospective</h2>
+          <p class="section__desc">Paste your meeting transcript and let AI uncover the emotional undercurrents your team might be missing.</p>
+        </div>
+        <div class="analyze">
+          <div class="analyze__input">
+            <div class="analyze__toolbar">
+              <div class="analyze__toolbar-left">
+                <span class="analyze__toolbar-label">Transcript</span>
+                <span class="analyze__word-count" id="wordCount">0 words</span>
+              </div>
+              <div class="analyze__toolbar-right">
+                <button class="btn btn--sm btn--ghost" data-action="sample-transcript" title="Load sample transcript">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Sample
+                </button>
+                <button class="btn btn--sm btn--ghost" data-action="clear-transcript" title="Clear">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Clear
+                </button>
+              </div>
+            </div>
+            <textarea
+              class="analyze__textarea"
+              id="transcriptInput"
+              placeholder="Paste your retrospective transcript here...
+
+Example:
+Sarah: I feel like we keep having the same conversation every sprint.
+Mike: Yeah, the deployment pipeline is still causing issues. It's frustrating.
+Lisa: Honestly, I'm a bit burned out. We've been pushing hard for three months.
+..."
+              rows="12"
+              spellcheck="true"
+            ></textarea>
+            <div class="analyze__actions">
+              <button class="btn btn--primary btn--lg" id="analyzeBtn" disabled>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M10 6v8M6 10h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Analyze Emotional Health
+              </button>
+              <div class="analyze__features">
+                <div class="analyze__feature">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Sentiment Analysis
+                </div>
+                <div class="analyze__feature">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Bottleneck Detection
+                </div>
+                <div class="analyze__feature">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Actionable Insights
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analysis Results -->
+          <div class="results" id="results" hidden>
+            <div class="results__header">
+              <h3 class="results__title">Emotional Health Analysis</h3>
+              <div class="results__meta">
+                <span class="results__date" id="analysisDate"></span>
+                <span class="results__divider">·</span>
+                <span class="results__words" id="analysisWords"></span>
+              </div>
+            </div>
+
+            <!-- Overall Score -->
+            <div class="results__overall">
+              <div class="results__score-ring">
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                  <circle class="score-ring__bg" cx="60" cy="60" r="52" stroke-width="8" fill="none"/>
+                  <circle class="score-ring__progress" id="scoreRing" cx="60" cy="60" r="52" stroke="#00d4aa" stroke-width="8" fill="none"
+                    stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+                  <text x="60" y="60" text-anchor="middle" dominant-baseline="central">
+                    <tspan class="score-ring__number" id="scoreNumber" font-size="32" font-weight="700" fill="#fff">--</tspan>
+                    <tspan class="score-ring__label" font-size="12" fill="#888" x="60" y="82">/100</tspan>
+                  </text>
+                </svg>
+              </div>
+              <div class="results__score-info">
+                <div class="results__score-grade" id="scoreGrade">Analyzing...</div>
+                <p class="results__score-summary" id="scoreSummary">Your team's emotional health score will appear here.</p>
+                <div class="results__score-tags" id="scoreTags"></div>
+              </div>
+            </div>
+
+            <!-- Emotional Bottlenecks -->
+            <div class="bottlenecks">
+              <h4 class="bottlenecks__title">Emotional Bottlenecks Detected</h4>
+              <div class="bottlenecks__grid" id="bottlenecksGrid">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+
+            <!-- Emotional Timeline -->
+            <div class="timeline">
+              <h4 class="timeline__title">Emotional Tone Timeline</h4>
+              <p class="timeline__desc">How the emotional tone shifted throughout the retrospective.</p>
+              <div class="timeline__chart" id="timelineChart">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+
+            <!-- Key Insights -->
+            <div class="insights">
+              <h4 class="insights__title">Key Insights & Recommendations</h4>
+              <div class="insights__list" id="insightsList">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+
+            <div class="results__actions">
+              <button class="btn btn--primary" data-action="save-analysis">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M15 12v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 3h3v3M8 10l7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Save to History
+              </button>
+              <button class="btn btn--secondary" data-action="view-personality">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M3 16c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Match to Team Profile
+              </button>
+            </div>
+          </div>
+
+          <!-- Analysis Loading -->
+          <div class="loading" id="loading" hidden>
+            <div class="loading__spinner">
+              <span class="loading__ring"></span>
+              <span class="loading__ring"></span>
+              <span class="loading__ring"></span>
+            </div>
+            <div class="loading__text">
+              <span class="loading__dots" id="loadingText">Analyzing emotional patterns</span>
+            </div>
+            <div class="loading__progress">
+              <div class="loading__progress-bar" id="loadingProgress"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Personality Section -->
+    <section class="section section--alt" id="personality">
+      <div class="section__inner">
+        <div class="section__header">
+          <h2 class="section__title">Team Personality Profile</h2>
+          <p class="section__desc">Configure your team's personality traits so exercise recommendations feel tailored, not generic.</p>
+        </div>
+        <div class="personality">
+          <div class="personality__traits" id="traitsContainer">
+            <!-- Filled dynamically -->
+          </div>
+          <div class="personality__profile" id="personalityProfile">
+            <div class="personality__profile-card">
+              <div class="personality__profile-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <circle cx="16" cy="11" r="5" stroke="currentColor" stroke-width="2"/>
+                  <path d="M5 28c0-6.075 4.925-11 11-11s11 4.925 11 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="personality__profile-type" id="profileType">Balanced Collaborator</div>
+              <p class="personality__profile-desc" id="profileDesc">Your team communicates evenly across all styles. This flexibility helps in most situations but can lack a decisive edge under pressure.</p>
+              <div class="personality__profile-traits" id="profileTraits"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercises Section -->
+    <section class="section" id="exercises">
+      <div class="section__inner">
+        <div class="section__header">
+          <h2 class="section__title">Team-Building Exercises</h2>
+          <p class="section__desc">AI-curated exercises based on your detected bottlenecks and team personality profile.</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="exercises__filters" id="exerciseFilters">
+          <button class="filter-chip filter-chip--active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="communication">Communication</button>
+          <button class="filter-chip" data-filter="trust">Trust</button>
+          <button class="filter-chip" data-filter="problem-solving">Problem Solving</button>
+          <button class="filter-chip" data-filter="social">Social</button>
+          <button class="filter-chip" data-filter="stress">Stress Relief</button>
+        </div>
+
+        <div class="exercises__grid" id="exercisesGrid">
+          <!-- Filled dynamically -->
+        </div>
+
+        <div class="exercises__empty" id="exercisesEmpty" hidden>
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" stroke="#333" stroke-width="2"/>
+            <path d="M24 16v8M24 28h.01" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <p>No exercises match this filter. Try a different category.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vibe Tracker Section -->
+    <section class="section section--alt" id="tracker">
+      <div class="section__inner">
+        <div class="section__header">
+          <h2 class="section__title">Vibe Tracker</h2>
+          <p class="section__desc">Track your team's emotional health over time. Quick weekly check-ins to see if things are actually improving.</p>
+        </div>
+        <div class="tracker">
+          <div class="tracker__checkin">
+            <h3 class="tracker__checkin-title">Weekly Check-In</h3>
+            <p class="tracker__checkin-desc">Rate how your team is feeling this week across these dimensions.</p>
+            <div class="tracker__sliders" id="checkinSliders">
+              <!-- Filled dynamically -->
+            </div>
+            <button class="btn btn--primary" id="checkinSubmit">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M15 9a6 6 0 11-12 0 6 6 0 0112 0z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Submit Check-In
+            </button>
+          </div>
+          <div class="tracker__chart">
+            <h3 class="tracker__chart-title">Team Vibe Trend</h3>
+            <div class="tracker__chart-container">
+              <canvas id="vibeChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Follow-ups Section -->
+        <div class="followups">
+          <h3 class="followups__title">Exercise Follow-Ups</h3>
+          <p class="followups__desc">After trying an exercise, log vibe check-ins to measure if your team's emotional health actually improved.</p>
+          <div id="followupsList">
+            <div class="followups__empty">No exercises tried yet. Run an analysis and try an exercise to start tracking impact.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <section class="section" id="history">
+      <div class="section__inner">
+        <div class="section__header">
+          <h2 class="section__title">Retrospective History</h2>
+          <p class="section__desc">A complete record of past analyses, exercises tried, and vibe trends.</p>
+        </div>
+
+        <!-- Stats summary -->
+        <div class="history__stats" id="historyStats">
+          <div class="history__stat-card">
+            <div class="history__stat-value" id="historyCount">0</div>
+            <div class="history__stat-label">Total Retrospectives</div>
+          </div>
+          <div class="history__stat-card">
+            <div class="history__stat-value" id="historyAvgScore">--</div>
+            <div class="history__stat-label">Avg Health Score</div>
+          </div>
+          <div class="history__stat-card">
+            <div class="history__stat-value" id="historyTopBottleneck">--</div>
+            <div class="history__stat-label">Most Common Issue</div>
+          </div>
+          <div class="history__stat-card">
+            <div class="history__stat-value" id="historyExercisesDone">0</div>
+            <div class="history__stat-label">Exercises Tried</div>
+          </div>
+        </div>
+
+        <!-- History list -->
+        <div class="history__list" id="historyList">
+          <div class="history__empty" id="historyEmpty">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="12" width="48" height="40" rx="4" stroke="#333" stroke-width="2"/>
+              <path d="M22 28h20M22 36h14" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>No retrospectives yet</h3>
+            <p>Run your first analysis above to build up your team's history.</p>
+            <a href="#analyze" class="btn btn--primary">Analyze Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        RetroVibe — AI Agile Retrospective Coach
+      </div>
+      <p class="footer__tagline">Building emotionally intelligent teams, one retrospective at a time.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite">
+    <div class="toast__icon" id="toastIcon">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="toast__message" id="toastMessage">Saved!</span>
+    <button class="toast__close" aria-label="Dismiss">&times;</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
